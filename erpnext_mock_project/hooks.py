@@ -109,6 +109,13 @@ app_license = "MIT"
 #		"on_trash": "method"
 #	}
 # }
+doc_events={
+    "Employee":{
+        "validate":"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.employee.report",
+        # "validate":"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.mock_report. workingdays",
+        
+    }
+}
 
 # Scheduled Tasks
 # ---------------
