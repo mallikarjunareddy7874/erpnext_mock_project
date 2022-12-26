@@ -9,10 +9,13 @@
 			args: {
 				x: child.start_date
 			},
-			
 			callback:function(r){
 				console.log(r)
-				frappe.model.set_value(cdt,cdn, 'end_date', r.message)
+				if(child.deduction_type=='Onetime'){
+					frappe.model.set_value(cdt,cdn, 'end_date', r.message)
+				}
+				
+				
 			}
 		});
 	}
@@ -31,21 +34,25 @@ frappe.ui.form.on('Deduction Detail', {
 			callback:function(r){
 				// frappe.msgprint(r)
 				var childTable = cur_frm.add_child("deduction_calculation");
-				if (data.deduction_type=='Onetime'){
+				if (data.deduction_type=='Onetime'&& data.amount>0){
+					
 					childTable.month=r.message
 					childTable.onetime = data.amount
+				
 					
 
 					cur_frm.refresh_fields("deduction_calculation");
 				}
-				else 
+			
+
+				else if(data.deduction_type=='recurring'&& data.amount>0){
 					childTable.recurring = data.amount
 					childTable.total =childTable.onetime
-					childTable.balance =chilldTable.total-chilldTable.actualpaid_amount
+					// childTable.balance =chilldTable.total-chilldTable.actualpaid_amount
 
 					cur_frm.refresh_fields("deduction_calculation");
 
-				// }
+				}
 					
 				
 				
@@ -70,7 +77,7 @@ frappe.ui.form.on('Deduction Detail', {
 		frappe.call({
 			method:"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.employee_deduction.amtt",
 			args: {
-				amt: fr.doc.amount
+				amt: m.amount
 			},
 			
 			callback:function(r){
@@ -99,7 +106,7 @@ frappe.ui.form.on('Deduction Detail', {
 			
 			callback:function(r){
 				console.log(r)
-				frappe.msgprint(r.message)
+				// frappe.msgprint(r.message)
 				
 
 		

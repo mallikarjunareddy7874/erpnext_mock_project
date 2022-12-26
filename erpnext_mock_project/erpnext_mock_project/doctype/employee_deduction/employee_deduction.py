@@ -71,8 +71,8 @@ def convertDateFormat(start_date):
     
 @frappe.whitelist()
 def amtt(amt):
-    if amt == 0:
-        return "Enter the amount"
+    if int(amt)<0:
+        return "Entering amount should be greater than 0"
 @frappe.whitelist()
 def validate(x,y):
     if x>y:
