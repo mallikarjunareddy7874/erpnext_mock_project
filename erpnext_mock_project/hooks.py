@@ -110,8 +110,8 @@ app_license = "MIT"
 #	}
 # }
 doc_events={
-    "Employee":{
-        "validate":"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.employee.report",
+    "Timesheet":{
+        "validate":"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.report_mock_project.report",
         # "validate":"erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.mock_report. workingdays",
         
     }

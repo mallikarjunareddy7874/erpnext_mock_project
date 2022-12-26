@@ -68,6 +68,7 @@ def convertDateFormat(start_date):
     x=str(start_date)
     date=datetime.datetime.strptime(start_date, '%Y-%m-%d')
     return date.strftime('%b-%y')
+    
 @frappe.whitelist()
 def amtt(amt):
     if amt == 0:
@@ -78,6 +79,21 @@ def validate(x,y):
         return "incorrect"
     else:
         return 'its all good'
+# @frappe.whitelist()
+# def amount(z,y):
+#     if z=="Onetime":
+#         return amount
+    
+        
+        
+        
+    
+    
+    
+    
+# @frappe.whitelist()
+# def duplicate(x):
+    
         
 
     
@@ -90,7 +106,7 @@ def validate(x,y):
     # return mydate.month
     # mydate= datetime.date.today()
     # return mydate.month
-
+    
 
 
     

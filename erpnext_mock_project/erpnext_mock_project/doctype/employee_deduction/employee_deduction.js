@@ -29,10 +29,26 @@ frappe.ui.form.on('Deduction Detail', {
 				start_date:data.start_date
 			},
 			callback:function(r){
-				frappe.msgprint(r)
+				// frappe.msgprint(r)
 				var childTable = cur_frm.add_child("deduction_calculation");
-				childTable.month=r.message
-				cur_frm.refresh_fields("deduction_calculation");
+				if (data.deduction_type=='Onetime'){
+					childTable.month=r.message
+					childTable.onetime = data.amount
+					
+
+					cur_frm.refresh_fields("deduction_calculation");
+				}
+				else 
+					childTable.recurring = data.amount
+					childTable.total =childTable.onetime
+					childTable.balance =chilldTable.total-chilldTable.actualpaid_amount
+
+					cur_frm.refresh_fields("deduction_calculation");
+
+				// }
+					
+				
+				
 				// var child = cur_frm.add_child("deduction_calculation");
 				// child.month=r.message
 				
@@ -96,6 +112,50 @@ frappe.ui.form.on('Deduction Detail', {
 
 
 });
+// frappe.ui.form.on('Deduction Detail', {
+// 	amount:function(frm,cdt,cdn){
+// 		var data = locals[cdt][cdn]
+		
+// 		frappe.call({
+// 			"method": "erpnext_mock_project.erpnext_mock_project.doctype.employee_deduction.employee_deduction.amount",
+// 			"args": {
+// 				x:data.deduction_type,
+// 				y:data.start_data
+				
+			
+				
+// 			},
+// 			callback:function(r){
+// 				frappe.msgprint(r)
+// 				// var childTable = cur_frm.add_child("deduction_calculation");
+// 				// childTable.onetime=r.message
+// 				// cur_frm.refresh_fields("deduction_calculation");
+// 			}
+// 		});
+			
+			
+
+		
+	
+// 	}
+// });
+// frappe.ui.form.on("Deduction Detail", {
+// 	amount: function(frm, cdt, cdn) {
+// 		var row = locals[cdt][cdn];
+// 		if (row.amount) {
+// 			frappe.model.with_doc("Deduction Calculation", row.Onetime, function() {
+// 				var doc = frappe.model.get_doc("[Deduction Calculation]", row.Onettime);
+// 				$.each(doc.deduction_calculation || [], function(i, r) {
+// 					if(r.Onetime == frm.doc.amount) {
+// 						var df = frappe.meta.get_docfield("Deduction Detail","amount", frm.doc.amount);
+// 						df.options += ["\n" + r.amount];
+// 					}
+// 				})
+// 			});
+// 			frm.refresh_field("Deduction Detail")
+// 		}
+// 	}
+// });
 
 
 // frappe.ui.form.on('Deduction Calculation', {
