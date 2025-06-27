@@ -28,16 +28,16 @@ jobs:
         with:
           python-version: '3.10'
 
-      # ===== ADDED STATIC ANALYSIS =====
+      # Fixed Static Analysis Step
       - name: Run Static Analysis
         run: |
           pip install pylint pyflakes
           echo "=== Running pyflakes ==="
-          python -m pyflakes erpnext_mock_project/test || exit 1
+          find . -name "*.py" -exec pyflakes {} +
           echo "=== Running pylint ==="
-          pylint --errors-only erpnext_mock_project/test || exit 1
+          pylint --errors-only $(find apps/erpnext_mock_project/test -name "*.py")
           echo "=== Testing direct import ==="
-          python -c "from erpnext_mock_project.test import testing" || exit 1
+          python -c "from erpnext_mock_project.test.testing import TestErrorDetection"
 
       - name: Install Frappe Bench
         run: pip install frappe-bench
