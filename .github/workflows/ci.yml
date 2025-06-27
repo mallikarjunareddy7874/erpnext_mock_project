@@ -1,6 +1,8 @@
 name: ERPNext Test Runner
 
 on:
+  push:
+    branches: [custom]
   pull_request:
     branches: [custom]
 
@@ -25,6 +27,17 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
+
+      # ===== ADDED STATIC ANALYSIS =====
+      - name: Run Static Analysis
+        run: |
+          pip install pylint pyflakes
+          echo "=== Running pyflakes ==="
+          python -m pyflakes erpnext_mock_project/test || exit 1
+          echo "=== Running pylint ==="
+          pylint --errors-only erpnext_mock_project/test || exit 1
+          echo "=== Testing direct import ==="
+          python -c "from erpnext_mock_project.test import testing" || exit 1
 
       - name: Install Frappe Bench
         run: pip install frappe-bench
