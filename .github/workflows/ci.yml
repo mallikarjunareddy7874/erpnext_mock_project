@@ -1,8 +1,6 @@
 name: ERPNext Test Runner
 
 on:
-  push:
-    branches: [custom]
   pull_request:
     branches: [custom]
 
@@ -33,12 +31,12 @@ jobs:
 
       - name: Initialize Test Environment
         run: |
-          bench init --skip-redis-config-generation --python $(which python3) ~/frappe-bench
+          bench init --skip-redis-config-generation --python $(which python3) /home/runner/frappe-bench
           mysql -h 127.0.0.1 -P 3306 -u root -proot -e "SET GLOBAL character_set_server = 'utf8mb4'"
           mysql -h 127.0.0.1 -P 3306 -u root -proot -e "SET GLOBAL collation_server = 'utf8mb4_unicode_ci'"
 
       - name: Install App and Test
-        working-directory: ~/frappe-bench
+        working-directory: /home/runner/frappe-bench
         run: |
           bench get-app erpnext_mock_project $GITHUB_WORKSPACE
           bench new-site --db-root-password root --admin-password admin hipl.local
